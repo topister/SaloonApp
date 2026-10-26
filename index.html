@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#5a304b">
+  <title>Salon Studio | Book an Appointment</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#home" aria-label="Salon Studio home"><span class="brand-mark">✂</span><span><strong id="brandName">Salon Studio</strong><small>Beauty, your way</small></span></a>
+    <nav class="nav"><button class="nav-btn active" data-view="home">Book a service</button><button class="nav-btn" data-view="admin">Salon dashboard</button></nav>
+  </header>
+
+  <main class="container" id="homeView">
+    <section class="hero">
+      <div class="hero-copy"><p class="eyebrow">WELCOME TO YOUR SALON</p><h1>Your style.<br><em>Your moment.</em></h1><p>Explore styles, compare prices, and request your appointment in a few easy steps.</p><a class="button" href="#styles">Explore styles <span aria-hidden="true">→</span></a></div>
+      <div class="hero-image" role="img" aria-label="Hair styling tools and salon chair"><span>✨</span><p>Feel good.<br>Look amazing.</p></div>
+    </section>
+
+    <section class="section" id="styles">
+      <div class="section-heading"><div><p class="eyebrow">FIND YOUR LOOK</p><h2>Choose a service</h2></div><p class="muted">Prices shown in Kenyan shillings (KSh)</p></div>
+      <div class="category-tabs" role="tablist" aria-label="Service categories"><button class="category-tab active" data-category="braiding">👩🏾 Braiding</button><button class="category-tab" data-category="mens">🧔🏾 Men's cuts</button><button class="category-tab" data-category="other">✨ Other services</button></div>
+      <div class="style-grid" id="styleGrid" aria-live="polite"></div>
+    </section>
+
+    <section class="section booking-section" id="bookingSection">
+      <div class="section-heading"><div><p class="eyebrow">MAKE IT OFFICIAL</p><h2>Request a booking</h2></div><p class="muted">Choose a style above to fill in its price.</p></div>
+      <div class="booking-layout">
+        <form id="bookingForm" class="panel form-grid">
+          <div class="field"><label for="customerName">Your name</label><input id="customerName" name="customerName" required maxlength="80" placeholder="Full name"></div>
+          <div class="field"><label for="customerPhone">Phone number</label><input id="customerPhone" name="customerPhone" required maxlength="25" placeholder="07XX XXX XXX"></div>
+          <div class="field full"><label for="selectedStyle">Selected style</label><input id="selectedStyle" readonly required placeholder="Choose a style card above"><input id="selectedStyleId" type="hidden"></div>
+          <div class="field"><label for="selectedPrice">Price (KSh)</label><input id="selectedPrice" readonly placeholder="Select a style"></div>
+          <div class="field"><label for="bookingDate">Preferred date</label><input id="bookingDate" type="date" required></div>
+          <div class="field"><label for="bookingTime">Preferred time</label><select id="bookingTime" required><option value="">Choose a time</option><option>08:00</option><option>09:00</option><option>10:00</option><option>11:00</option><option>12:00</option><option>13:00</option><option>14:00</option><option>15:00</option><option>16:00</option><option>17:00</option></select></div>
+          <div class="field"><label for="paymentMethod">Payment method (optional)</label><select id="paymentMethod"><option value="Not selected">Choose later</option><option>M-Pesa</option><option>Cash</option><option>Card</option></select></div>
+          <div class="field full"><label for="customerNotes">Notes (optional)</label><textarea id="customerNotes" maxlength="240" rows="3" placeholder="Hair length, preferred barber, or other details"></textarea></div>
+          <div class="field full"><button class="button full-button" type="submit">Request appointment</button><p class="small muted">This demo saves bookings in this browser only. The salon should confirm your appointment.</p><div id="bookingNotice" class="notice hidden" role="status"></div></div>
+        </form>
+        <aside class="booking-aside"><div class="aside-icon">📅</div><h3>One step closer to your look</h3><p>Pick a style card, check the price, and send your preferred appointment time.</p><div class="price-note"><strong>Good to know</strong><p>Displayed prices are sample prices. The salon owner can change them in the dashboard to match actual prices and hair length.</p></div></aside>
+      </div>
+    </section>
+  </main>
+
+  <main class="container hidden" id="adminView">
+    <section class="section dashboard-header"><div><p class="eyebrow">SALON OWNER AREA</p><h1>Salon dashboard</h1><p class="muted">Review appointment requests, update prices, and track payments.</p></div><button class="button secondary" id="editNameBtn">Change salon name</button></section>
+    <section class="stats"><article class="stat panel"><span>Today's bookings</span><strong id="todayCount">0</strong></article><article class="stat panel"><span>Paid sales today</span><strong id="todaySales">KSh 0</strong></article><article class="stat panel"><span>Unpaid bookings</span><strong id="unpaidCount">0</strong></article></section>
+    <section class="section"><div class="section-heading"><h2>Appointment requests</h2><button class="button secondary" id="exportBtn">Export CSV</button></div><div id="bookingList" class="booking-list"></div></section>
+    <section class="section"><div class="section-heading"><div><p class="eyebrow">EDIT YOUR MENU</p><h2>Styles and prices</h2></div></div><div class="panel"><p class="muted small">Add a new style or change the price and duration of an existing style.</p><form id="styleForm" class="form-grid"><div class="field"><label for="newStyleName">Style name</label><input id="newStyleName" required maxlength="70" placeholder="e.g. Medium knotless braids"></div><div class="field"><label for="newStylePrice">Price (KSh)</label><input id="newStylePrice" type="number" min="0" step="50" required placeholder="e.g. 2500"></div><div class="field"><label for="newStyleCategory">Category</label><select id="newStyleCategory"><option value="braiding">Braiding</option><option value="mens">Men's cuts</option><option value="other">Other services</option></select></div><div class="field"><label for="newStyleDuration">Duration</label><select id="newStyleDuration"><option>30 minutes</option><option>45 minutes</option><option>1 hour</option><option>1.5 hours</option><option>2 hours</option><option>3 hours</option><option>4 hours</option></select></div><div class="field full"><label for="newStyleImage">Image URL (optional)</label><input id="newStyleImage" type="url" placeholder="https://example.com/style-photo.jpg"></div><div class="field full"><button class="button" type="submit">Add style</button></div></form><hr class="divider"><div id="styleManageList" class="manage-list"></div></div></section>
+    <section class="section"><div class="panel privacy-panel"><h3>Data & privacy</h3><p class="muted small">This starter version stores information only in this browser. It does not sync across devices, have secure owner login, or send SMS/WhatsApp notifications. Add an online database before using it for a real salon.</p><button class="button danger" id="resetBtn">Reset demo data</button></div></section>
+  </main>
+  <footer>Salon Studio · Simple salon bookings · Prices in KSh</footer>
+</body>
+</html>
